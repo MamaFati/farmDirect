@@ -6,16 +6,14 @@ User = get_user_model()
 
 # Create your models here.
 class UserProfile(models.Model):
-    ROLES = (
-        ("farmer","FARMER"),
-        ("user","USER")
+    ROLE_CHOICES = (
+        ('farmer', 'Farmer'),
+        ('buyer', 'Buyer'),
     )
-    user_id = models.ForeignKey(User,on_delete=models.PROTECT)
-    telephone = models.CharField(max_length=10,null=False)
-    role = models.CharField(max_length=6,choices=ROLES)
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='buyer')
     def __str__(self):
-        return f"{self.user_id.username} {self.role}"
+        return f"{self.user.username} - {self.role}"
     
 class Product(models.Model):
     name = models.CharField(max_length=100)

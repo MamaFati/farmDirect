@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, DjangoObjectPermissions
 
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,14 +14,15 @@ from carts.models import Order
 from carts.serializers import OrderSerializer
 from .serializers import ( ProductSerializer, CategorySerializer
 )
+from users.serializers import UserSerializer
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,DjangoObjectPermissions,)
     def get_queryset(self):
         # Filter products based on view permission
-        return get_objects_for_user(self.request.user, 'users.view_product', Product,accept_global_perms=False)
+        return get_objects_for_user(self.request.user, 'products.view_product', Product,accept_global_perms=False)
     def perform_create(self, serializer):
         if not self.request.user.groups.filter(name='Farmers').exists():
             return Response({"detail": "Only farmers can create products"}, status=status.HTTP_403_FORBIDDEN)
@@ -62,7 +63,7 @@ class DashboardView(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request, *args, **kwargs):
         if request.user.groups.filter(name='Farmers').exists():
-            products = get_objects_for_user(request.user, 'users.view_product', Product,accept_global_perms=False)
+            products = get_objects_for_user(request.user, 'products.view_product', Product,accept_global_perms=False)
             orders = Order.objects.filter(items__product__farmer=request.user).distinct()
             data = {
                 'products': ProductSerializer(products, many=True).data,
