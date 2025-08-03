@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User, Group, Permission
 from guardian.admin import GuardedModelAdmin
+from guardian.models import GroupObjectPermission, UserObjectPermission
 from users.models import UserProfile
 
 
@@ -30,5 +31,6 @@ class CustomUserAdmin(GuardedModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Group)
+admin.site.register(GroupObjectPermission)
+admin.site.register(UserObjectPermission)
 admin.site.register(Permission)

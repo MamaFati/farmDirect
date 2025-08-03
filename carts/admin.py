@@ -10,12 +10,12 @@ class CartItemInline(admin.TabularInline):
 
 
 class CartAdmin(GuardedModelAdmin):
-    list_display = ['buyer', 'get_item_count']
+    list_display = ['buyer', "get_item_count"]
     search_fields = ['buyer__username', 'buyer__email']
     inlines = [CartItemInline]
 
     def get_item_count(self, obj):
-        return obj.cartitem_set.count()
+        return obj.items.count()
     get_item_count.short_description = 'Items'
 
 
