@@ -43,6 +43,8 @@ THIRD_PARTY_APPS = [
 
 CUSTOM_APPS = [
     "users", 
+    "products",
+    "carts",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -96,10 +98,14 @@ if USE_SQLITE:
     }
 else:
     DATABASES = {
-        'default': dj_database_url.config(
-            default=config('DATABASE_URL'),
-            conn_max_age=600
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.postgres',
+            'NAME': config('DB_NAME', cast=str, default='railway'),
+            'USER': config('DB_USER', cast=str, default='root'),
+            'PORT': config('DB_PORT', cast=int, default=5432),
+            'HOST': config('DB_HOST', cast=str, default='localhost'),
+            'PASSWORD': config('DB_PASSWORD', cast=str, default=''),
+        }
     }
 logger.info(f"DATABASES: {DATABASES['default']['ENGINE']}")
 
@@ -197,11 +203,6 @@ SWAGGER_SETTINGS = {
             'description': 'JWT Token (Bearer <token>)',
         },
     },
-    'DEFAULT_INFO': 'config.urls.swagger_info',  # Reference to swagger_info in urls.py
-    'DEFAULT_API_URL': config('SWAGGER_API_URL', default='http://localhost:8000'),
-    'PERSIST_AUTH': True,
-    'REFETCH_SCHEMA_WITH_AUTH': True,
-    'DEFAULT_MODEL_RENDERING': 'example',
 }
 
 # Default primary key field type

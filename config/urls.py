@@ -28,6 +28,8 @@ urlpatterns = [
     path('', redirect_to_doc,name="redirect-to-doc"),
     
     path('api/<version>/', include('users.urls')),
+    path('api/<version>/carts/', include('carts.urls')),
+    path('api/<version>/products/', include('products.urls')),
 
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
