@@ -5,8 +5,7 @@ from guardian.shortcuts import assign_perm
 from decouple import config
 from users.models import UserProfile
 from products.models import Product, Category
-from carts.models import Cart, CartItem
-from orders.models import Order, OrderItem
+from carts.models import Cart, CartItem, Order, OrderItem
 from datetime import date, timedelta
 import random
 
