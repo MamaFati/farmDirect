@@ -17,6 +17,7 @@ schema_view = get_schema_view(
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
+    url="https://farmdirect-production.up.railway.app"
 )
 
 def redirect_to_doc(request):
