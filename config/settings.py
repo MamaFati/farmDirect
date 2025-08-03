@@ -169,6 +169,9 @@ CORS_ALLOW_METHODS = config('CORS_ALLOW_METHODS', cast=Csv(), default='GET,POST,
 CORS_ALLOW_HEADERS = config('CORS_ALLOW_HEADERS', cast=Csv(), default='content-type,authorization')
 logger.info(f"CORS_ALLOWED_ORIGINS: {CORS_ALLOWED_ORIGINS}")
 
+
+CSRF_TRUSTED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv(), default="https://farmdirect-production.up.railway.app")
+
 # Django REST Framework Configuration
 # Django REST Framework Configuration
 REST_FRAMEWORK = {
