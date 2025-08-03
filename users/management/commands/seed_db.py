@@ -215,6 +215,8 @@ class Command(BaseCommand):
         for buyer in buyers:
             for k in range(1, num_orders_per_buyer + 1):
                 order = create_sample_order(buyer, products)
-                self.stdout.write(self.style.SUCCESS(f"Created order {k} for {buyer.username} with {len(order.orderitem_set.all())} items"))
+                # Use the correct reverse accessor (assuming related_name='items')
+                order_item_count = len(order.items.all()) if hasattr(order, 'items') else OrderItem.objects.filter(order=order).count()
+                self.stdout.write(self.style.SUCCESS(f"Created order {k} for {buyer.username} with {order_item_count} items"))
 
         self.stdout.write(self.style.SUCCESS("Database seeding completed successfully."))
