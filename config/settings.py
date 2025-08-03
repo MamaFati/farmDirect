@@ -99,7 +99,7 @@ if USE_SQLITE:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgres',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': config('DB_NAME', cast=str, default='railway'),
             'USER': config('DB_USER', cast=str, default='root'),
             'PORT': config('DB_PORT', cast=int, default=5432),
