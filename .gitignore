@@ -89,8 +89,8 @@ ehthumbs.db
 Desktop.ini
 
 # dotenv
-.env
-.env.*
+# .env
+# .env.*
 
 # Node modules (if using frontend)
 node_modules/
